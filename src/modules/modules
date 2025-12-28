@@ -1,0 +1,53 @@
+### 3. modules/people
+
+เป็น Domain หลักของระบบ ใช้จัดการข้อมูลบุคคล
+
+#### people.controller.ts
+- รับ HTTP Request จาก Client
+- ส่งต่อข้อมูลไปยัง Service
+- ไม่มี Business Logic
+
+#### people.service.ts
+- ประมวลผล Business Logic ของระบบ
+- ตรวจสอบเงื่อนไขทางธุรกิจ
+- เรียกใช้งาน Repository
+
+#### people.repository.ts
+- ติดต่อฐานข้อมูลโดยตรง
+- ไม่มี Business Logic
+- แยก ORM หรือ Database Layer ออกจาก Service
+
+### enums
+
+ใช้สำหรับกำหนดค่าคงที่แบบจำกัดขอบเขต (Enumeration)
+
+- ป้องกันการใช้ค่าที่ไม่ถูกต้อง
+- ลดการใช้ string แบบ hardcode
+- เพิ่มความชัดเจนของ business rules
+
+ตัวอย่างการใช้งาน:
+- สถานะของบุคคล (ACTIVE, INACTIVE)
+- ประเภทหรือหมวดหมู่ข้อมูล
+
+### 4. dto (Data Transfer Object)
+
+- กำหนดรูปแบบข้อมูลที่รับเข้าและส่งออก
+- ใช้สำหรับ Validation
+- ลดความผิดพลาดจากข้อมูลที่ไม่ถูกต้อง
+
+### 5. entities
+
+ใช้กำหนดโครงสร้างของฐานข้อมูล
+
+- 1 Entity แทน 1 Table ใน PostgreSQL
+- ใช้สำหรับ ORM Mapping
+
+**Person Entity ประกอบด้วยข้อมูลหลัก**
+- id
+- firstName
+- lastName
+- nickname
+- phone
+- imageUrl
+- createdAt
+- updatedAt

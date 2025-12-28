@@ -1,0 +1,5 @@
+
+#### guards
+- ตรวจสอบสิทธิ์การเข้าถึง (Authentication / Authorization)
+- ทำงานก่อนเข้าสู่ Controller
+
