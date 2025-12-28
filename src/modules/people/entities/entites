@@ -1,0 +1,16 @@
+### 5. entities
+
+ใช้กำหนดโครงสร้างของฐานข้อมูล
+
+- 1 Entity แทน 1 Table ใน PostgreSQL
+- ใช้สำหรับ ORM Mapping
+
+**Person Entity ประกอบด้วยข้อมูลหลัก**
+- id
+- firstName
+- lastName
+- nickname
+- phone
+- imageUrl
+- createdAt
+- updatedAt

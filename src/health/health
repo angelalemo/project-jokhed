@@ -1,0 +1,10 @@
+### 7. health
+
+ใช้สำหรับตรวจสอบสถานะของระบบ (Health Check)
+
+- ตรวจสอบว่า Server ยังทำงานอยู่หรือไม่
+- ใช้ร่วมกับ Docker, Load Balancer หรือ Cloud Platform
+- ไม่มี Business Logic
+
+ตัวอย่าง Endpoint:
+GET /health

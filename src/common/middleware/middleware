@@ -1,0 +1,5 @@
+
+#### middlewares
+- ทำงานทันทีเมื่อมี HTTP Request เข้าสู่ระบบ
+- ใช้สำหรับงานระดับต้นของ request lifecycle
+- ไม่เกี่ยวข้องกับ business logic

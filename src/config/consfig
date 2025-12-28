@@ -1,0 +1,6 @@
+### 1. config
+
+ใช้สำหรับจัดเก็บไฟล์ตั้งค่ากลางของระบบ เช่น
+- การเชื่อมต่อฐานข้อมูล PostgreSQL
+- การจัดการ environment variables
+- การแยก configuration ออกจาก business logic

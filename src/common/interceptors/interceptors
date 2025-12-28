@@ -1,0 +1,4 @@
+
+#### interceptors
+- ดักจับ Request และ Response
+- ใช้สำหรับ logging, transform response และเพิ่ม metadata
