@@ -2,17 +2,17 @@
 
 เป็น Domain หลักของระบบ ใช้จัดการข้อมูลบุคคล
 
-#### people.controller.ts
+#### controller
 - รับ HTTP Request จาก Client
 - ส่งต่อข้อมูลไปยัง Service
 - ไม่มี Business Logic
 
-#### people.service.ts
+#### service
 - ประมวลผล Business Logic ของระบบ
 - ตรวจสอบเงื่อนไขทางธุรกิจ
 - เรียกใช้งาน Repository
 
-#### people.repository.ts
+#### repository
 - ติดต่อฐานข้อมูลโดยตรง
 - ไม่มี Business Logic
 - แยก ORM หรือ Database Layer ออกจาก Service

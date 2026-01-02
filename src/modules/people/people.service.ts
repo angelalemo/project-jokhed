@@ -19,4 +19,13 @@ export class PeopleService {
     }
     return people;
   }
+
+  async create(payload: {
+    name: string;
+    nickname?: string;
+    phone_number: string;
+    image_url?: string;
+  }): Promise<People> {
+    return this.peopleRepository.create(payload);
+  }
 }

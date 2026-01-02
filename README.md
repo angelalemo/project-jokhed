@@ -140,11 +140,9 @@ Controller → Service → Repository → Database
 
 ### 6. database
 
-#### migrations
+#### init
 - จัดการการเปลี่ยนแปลงโครงสร้างฐานข้อมูล
 - ควบคุม version ของ schema
-
-#### seeds
 - ใช้สำหรับสร้างข้อมูลตัวอย่างเริ่มต้น
 - ใช้ในขั้นตอนพัฒนา ทดสอบ หรือ demo
 - ไม่ใช้ใน production
