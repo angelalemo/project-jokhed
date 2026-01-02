@@ -11,25 +11,12 @@ export class PeopleService {
     return this.peopleRepository.findAll();
   }
 
-  /**Get one person by ID*/
-  async findOne(id: string): Promise<People> {
-    const person = await this.peopleRepository.findOne(id);
-    
-    if (!person) {
-      throw new NotFoundException(`Person with ID ${id} not found`);
+  /**Get people by Name&Nickname*/
+  async findByNameandNickname(Name: string): Promise<People[]> {
+    const people = await this.peopleRepository.findOne(Name);
+    if (people.length === 0) {
+      throw new NotFoundException(`Person with Name ${Name} not found`);
     }
-    
-    return person;
-  }
-
-  /* Get one person by phone number*/
-  async findByPhoneNumber(phoneNumber: string): Promise<People> {
-    const person = await this.peopleRepository.findByPhoneNumber(phoneNumber);
-    
-    if (!person) {
-      throw new NotFoundException(`Person with phone number ${phoneNumber} not found`);
-    }
-    
-    return person;
+    return people;
   }
 }

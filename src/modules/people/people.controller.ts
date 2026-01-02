@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body } from '@nestjs/common';
 import { PeopleService } from './people.service';
 import { People } from './entities/people.entity';
 
@@ -11,13 +11,8 @@ export class PeopleController {
     return this.peopleService.findAll();
   }
 
-  @Get('phone')
-  async findByPhone(@Query('number') phoneNumber: string): Promise<People> {
-    return this.peopleService.findByPhoneNumber(phoneNumber);
-  }
-
-  @Get(':id')
-  async findOne(@Param('id') id: string): Promise<People> {
-    return this.peopleService.findOne(id);
+  @Post('search')
+  async findByName(@Body() body: { name: string }): Promise<People[]> {
+    return this.peopleService.findByNameandNickname(body.name);
   }
 }
