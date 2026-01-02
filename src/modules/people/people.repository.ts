@@ -38,4 +38,25 @@ export class PeopleRepository implements OnModuleDestroy {
     return result.rows.map((row) => new People(row));
   }
 
+  async create(payload: {
+    name: string;
+    nickname?: string;
+    phone_number: string;
+    image_url?: string;
+  }): Promise<People> {
+    const query = `
+      INSERT INTO people (name, nickname, phone_number, image_url)
+      VALUES ($1, $2, $3, $4)
+      RETURNING *
+    `;
+    const values = [
+      payload.name,
+      payload.nickname ?? null,
+      payload.phone_number,
+      payload.image_url ?? null,
+    ];
+    const result = await this.pool.query(query, values);
+    return new People(result.rows[0]);
+  }
+
 }
