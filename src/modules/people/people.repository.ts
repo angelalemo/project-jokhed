@@ -59,4 +59,35 @@ export class PeopleRepository implements OnModuleDestroy {
     return new People(result.rows[0]);
   }
 
+//====================================================== UPDATE AND DELETE ======================================================//
+  async update(id: number, payload: { name: string; nickname?: string; phone_number: string; image_url?: string }): Promise<People | null> {
+    const query = `
+      UPDATE people 
+      SET name = $1, nickname = $2, phone_number = $3, image_url = COALESCE($4, image_url)
+      WHERE id = $5
+      RETURNING *
+    `;
+    // COALESCE($4, image_url) แปลว่า ถ้าส่งรูปใหม่มาให้ใช้รูปใหม่ ถ้าไม่ส่ง ($4 เป็น null) ให้ใช้รูปเดิมใน DB
+    
+    const values = [
+      payload.name,
+      payload.nickname ?? null,
+      payload.phone_number,
+      payload.image_url ?? null, 
+      id
+    ];
+
+    const result = await this.pool.query(query, values);
+    if (result.rows.length === 0) return null; // หา ID ไม่เจอ
+    return new People(result.rows[0]);
+  }
+
+  // เพิ่มส่วน Delete
+  async delete(id: number): Promise<boolean> {
+    const query = 'DELETE FROM people WHERE id = $1';
+    const result = await this.pool.query(query, [id]);
+    // rowCount คือจำนวนแถวที่ถูกลบ ถ้า > 0 แปลว่าลบสำเร็จ
+    return (result.rowCount ?? 0) > 0;
+  }
+
 }

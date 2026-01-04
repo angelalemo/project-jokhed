@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body, UseInterceptors, UploadedFile, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, ParseIntPipe, UseInterceptors, UploadedFile, BadRequestException } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname, join } from 'path';
 import { existsSync, mkdirSync } from 'fs';
 import { PeopleService } from './people.service';
 import { People } from './entities/people.entity';
+import { multerConfig } from 'src/common/utils/multer.config';
 
 @Controller('people')
 export class PeopleController {
@@ -22,22 +23,7 @@ export class PeopleController {
 
   @Post()
   @UseInterceptors(
-    FileInterceptor('image', {
-      storage: diskStorage({
-        destination: (_req, _file, cb) => {
-          const uploadPath = join(process.cwd(), 'uploads', 'people');
-          if (!existsSync(uploadPath)) {
-            mkdirSync(uploadPath, { recursive: true });
-          }
-          cb(null, uploadPath);
-        },
-        filename: (_req, file, cb) => {
-          const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-          cb(null, `${uniqueSuffix}${extname(file.originalname)}`);
-        },
-      }),
-      limits: { fileSize: 5 * 1024 * 1024 },
-    }),
+    FileInterceptor('image', multerConfig('people'))
   )
   async create(
     @Body()
@@ -55,5 +41,31 @@ export class PeopleController {
       phone_number: body.phone_number,
       image_url: imageUrl,
     });
+  }
+
+ //====================================================== PUT AND DELETE ======================================================//
+
+  @Put(':id')
+    @UseInterceptors(
+    FileInterceptor('image', multerConfig('people')) 
+  )
+  async update(
+    @Param('id', ParseIntPipe) id: number, // รับ ID จาก URL เช่น /people/1
+    @Body() body: { name: string; nickname?: string; phone_number: string },
+    @UploadedFile() file?: Express.Multer.File,
+  ): Promise<People> {
+    const imageUrl = file ? `/uploads/people/${file.filename}` : undefined;
+    
+    // ส่งไปให้ Service
+    return this.peopleService.update(id, {
+      name: body.name,
+      nickname: body.nickname,
+      phone_number: body.phone_number,
+      image_url: imageUrl,
+    });
+  }
+  @Delete(':id')
+  async delete(@Param('id', ParseIntPipe) id: number) {
+    return this.peopleService.delete(id);
   }
 }

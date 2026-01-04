@@ -28,4 +28,19 @@ export class PeopleService {
   }): Promise<People> {
     return this.peopleRepository.create(payload);
   }
+//====================================================== PUT AND DELETE ======================================================//
+  async update(id: number, payload: any): Promise<People> {
+    const updatedPerson = await this.peopleRepository.update(id, payload);
+    if (!updatedPerson) {
+      throw new NotFoundException(`Person with ID ${id} not found`);
+    }
+    return updatedPerson;
+  }
+
+  async delete(id: number): Promise<void> {
+    const isDeleted = await this.peopleRepository.delete(id);
+    if (!isDeleted) {
+      throw new NotFoundException(`Person with ID ${id} not found`);
+    }
+  }
 }
