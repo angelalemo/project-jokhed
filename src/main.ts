@@ -24,6 +24,6 @@ async function bootstrap() {
   app.useStaticAssets(join(process.cwd(), 'uploads'), {
     prefix: '/uploads/',
   });
-  await app.listen(4000);
+  await app.listen(3000, '0.0.0.0');
 }
 bootstrap();
